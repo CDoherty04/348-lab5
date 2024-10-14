@@ -43,7 +43,7 @@ void findMinSales(char* months[], float sales[]) {
         }
     }
 
-    printf("Minimum sales:\t%f\t(%s)\n", min, months[minIndex]);
+    printf("Minimum sales:\t%.2f\t(%s)\n", min, months[minIndex]);
 }
 
 // Helper function for salesSummaryReport
@@ -58,7 +58,7 @@ void findMaxSales(char* months[], float sales[]) {
         }
     }
 
-    printf("Maximum sales:\t%f\t(%s)\n", max, months[maxIndex]);
+    printf("Maximum sales:\t%.2f\t(%s)\n", max, months[maxIndex]);
 }
 
 // Helper function for salesSummaryReport
@@ -70,7 +70,7 @@ void findAverageSales(float sales[]) {
             sum += sales[i];
     }
 
-    printf("Average sales:\t%f\n", sum/12);
+    printf("Average sales:\t%.2f\n", sum/12);
 }
 
 // Show the minimum, maximum, and average monthly sales
@@ -79,17 +79,35 @@ void salesSummaryReport(char *months[], float sales[]) {
     findMinSales(months, sales);
     findMaxSales(months, sales);
     findAverageSales(sales);
+}
 
+void sixMonthMovingAverageReport(char *months[], float sales[]) {
+    printf("\nSix-Month moving average report:\n\n");
+    float sum = 0;
+    for (int i = 0; i <= 6; i++) {
+        for (int j = i; j < i+6; j++) {
+            sum += sales[j];
+        }
+        if (strlen(months[i]) < 16) {
+            printf("%s-%s\t\t%.2f\n", months[i], months[i+5], sum/6);
+        }
+        else {
+            printf("%s-%s\t%.2f\n", months[i], months[i+5], sum/6);
+        }
+        sum = 0;
+    }
 }
 
 int main() {
-    float sales[12];
+    float sales[12] = {23458.01, 40112.00, 56011.85, 37820.88, 37904.67, 60200.22, 72400.31, 56210.89, 67230.84, 68233.12, 80950.34, 95225.22};
     char* months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-    getInput(months, sales);
+
+    // getInput(months, sales);
     printf("\nMonthly Sales Report for 2024\n\n");
     monthlySalesReport(months, sales);
     salesSummaryReport(months, sales);
+    sixMonthMovingAverageReport(months, sales);
 
     return 0;
 }
