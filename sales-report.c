@@ -101,24 +101,27 @@ void sixMonthMovingAverageReport(char *months[], float sales[]) {
     }
 }
 
-// Helper function for highToLowSalesReport
-void sortArray(float arr[]) {
-
+// Display the sales from highest to lowest
+void highToLowSalesReport(char *months[], float sales[]) {
+    
     // Descending bubble sort algorithm 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11 - i; j++) {
-            if (arr[j] < arr[j + 1]) {
-                int temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+            if (sales[j] < sales[j + 1]) {
+
+                // Switch sales values
+                float tempSale = sales[j];
+                sales[j] = sales[j + 1];
+                sales[j + 1] = tempSale;
+
+                // Switch months values
+                char* tempMonth = months[j];
+                months[j] = months[j + 1];
+                months[j + 1] = tempMonth;
             }
         }
     }
-}
 
-// Display the sales from highest to lowest
-void highToLowSalesReport(char *months[], float sales[]) {
-    sortArray(sales);
     printf("\nSales Report (Highest to Lowest):\n\n");
     monthlySalesReport(months, sales);
 }
