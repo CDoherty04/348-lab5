@@ -1,13 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
-/*
-The Sales Report program asks you to read 12 monthly sales and generate a sales report.
-Monthly Sales Report: Display the month and sales in two columns.
-Sales Summary Report: Show the minimum, maximum, and average monthly sales.
-Six-Month Moving Average Report.
-Sales Report (Highest to Lowest): Display the sales from highest to lowest.
-*/
+#include <stdlib.h>
 
 // Get input for sales array
 void getInput(char *months[], float sales[]) {
@@ -23,10 +16,10 @@ void monthlySalesReport(char *months[], float sales[]) {
 
     for (int i = 0; i < 12; i++) {
         if (strlen(months[i]) < 8) {
-            printf("%s\t\t%.2f\n", months[i], sales[i]);
+            printf("%s\t\t$%.2f\n", months[i], sales[i]);
         }
         else {
-            printf("%s\t%.2f\n", months[i], sales[i]);
+            printf("%s\t$%.2f\n", months[i], sales[i]);
         }
     }
 }
@@ -43,7 +36,7 @@ void findMinSales(char* months[], float sales[]) {
         }
     }
 
-    printf("Minimum sales:\t%.2f\t(%s)\n", min, months[minIndex]);
+    printf("Minimum sales:\t$%.2f\t(%s)\n", min, months[minIndex]);
 }
 
 // Helper function for salesSummaryReport
@@ -58,7 +51,7 @@ void findMaxSales(char* months[], float sales[]) {
         }
     }
 
-    printf("Maximum sales:\t%.2f\t(%s)\n", max, months[maxIndex]);
+    printf("Maximum sales:\t$%.2f\t(%s)\n", max, months[maxIndex]);
 }
 
 // Helper function for salesSummaryReport
@@ -70,7 +63,7 @@ void findAverageSales(float sales[]) {
             sum += sales[i];
     }
 
-    printf("Average sales:\t%.2f\n", sum/12);
+    printf("Average sales:\t$%.2f\n", sum/12);
 }
 
 // Show the minimum, maximum, and average monthly sales
@@ -81,21 +74,42 @@ void salesSummaryReport(char *months[], float sales[]) {
     findAverageSales(sales);
 }
 
+// Show average sales over all 7 six-month periods of the year
 void sixMonthMovingAverageReport(char *months[], float sales[]) {
-    printf("\nSix-Month moving average report:\n\n");
+    printf("\nSix-Month Moving Average Report:\n\n");
     float sum = 0;
     for (int i = 0; i <= 6; i++) {
         for (int j = i; j < i+6; j++) {
             sum += sales[j];
         }
         if (strlen(months[i]) < 16) {
-            printf("%s-%s\t\t%.2f\n", months[i], months[i+5], sum/6);
+            printf("%s-%s\t\t$%.2f\n", months[i], months[i+5], sum/6);
         }
         else {
-            printf("%s-%s\t%.2f\n", months[i], months[i+5], sum/6);
+            printf("%s-%s\t$%.2f\n", months[i], months[i+5], sum/6);
         }
         sum = 0;
     }
+}
+
+// Helper function for highToLowSalesReport
+void sortArray(float arr[]) {
+    printf("\nSales Report (Highest to Lowest):\n\n");
+    for (int i = 0; i < 11; i++) {
+        for (int j = 0; j < 11 - i; j++) {
+            if (arr[j] < arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Display the sales from highest to lowest
+void highToLowSalesReport(char *months[], float sales[]) {
+    sortArray(sales);
+    monthlySalesReport(months, sales);
 }
 
 int main() {
@@ -108,6 +122,7 @@ int main() {
     monthlySalesReport(months, sales);
     salesSummaryReport(months, sales);
     sixMonthMovingAverageReport(months, sales);
+    highToLowSalesReport(months, sales);
 
     return 0;
 }
