@@ -14,6 +14,7 @@ void getInput(char *months[], float sales[]) {
 void monthlySalesReport(char *months[], float sales[]) {
     printf("Month\t\tSales\n");
 
+    // Add extra tabs for shorter month names
     for (int i = 0; i < 12; i++) {
         if (strlen(months[i]) < 8) {
             printf("%s\t\t$%.2f\n", months[i], sales[i]);
@@ -29,6 +30,7 @@ void findMinSales(char* months[], float sales[]) {
     float min = sales[0];
     int minIndex = 0;
 
+    // Compares every item to find minimum
     for (int i = 1; i < 12; i++) {
         if (sales[i] < min) {
             min = sales[i];
@@ -44,6 +46,7 @@ void findMaxSales(char* months[], float sales[]) {
     float max = sales[0];
     int maxIndex = 0;
 
+    // Compares every item to find maximum
     for (int i = 1; i < 12; i++) {
         if (sales[i] > max) {
             max = sales[i];
@@ -56,9 +59,9 @@ void findMaxSales(char* months[], float sales[]) {
 
 // Helper function for salesSummaryReport
 void findAverageSales(float sales[]) {
-    // Sum every element and divide by the number of months
     float sum = sales[0];
     
+    // Sum every element and divide by the number of months
     for (int i = 1; i < 12; i++) {
             sum += sales[i];
     }
@@ -78,7 +81,11 @@ void salesSummaryReport(char *months[], float sales[]) {
 void sixMonthMovingAverageReport(char *months[], float sales[]) {
     printf("\nSix-Month Moving Average Report:\n\n");
     float sum = 0;
+
+    // 7 month "ranges"
     for (int i = 0; i <= 6; i++) {
+
+        // find averages for 6 month periods and output
         for (int j = i; j < i+6; j++) {
             sum += sales[j];
         }
@@ -88,13 +95,16 @@ void sixMonthMovingAverageReport(char *months[], float sales[]) {
         else {
             printf("%s-%s\t$%.2f\n", months[i], months[i+5], sum/6);
         }
+
+        // Reset sum before next iteration
         sum = 0;
     }
 }
 
 // Helper function for highToLowSalesReport
 void sortArray(float arr[]) {
-    printf("\nSales Report (Highest to Lowest):\n\n");
+
+    // Descending bubble sort algorithm 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11 - i; j++) {
             if (arr[j] < arr[j + 1]) {
@@ -109,15 +119,18 @@ void sortArray(float arr[]) {
 // Display the sales from highest to lowest
 void highToLowSalesReport(char *months[], float sales[]) {
     sortArray(sales);
+    printf("\nSales Report (Highest to Lowest):\n\n");
     monthlySalesReport(months, sales);
 }
 
 int main() {
-    float sales[12] = {23458.01, 40112.00, 56011.85, 37820.88, 37904.67, 60200.22, 72400.31, 56210.89, 67230.84, 68233.12, 80950.34, 95225.22};
+    float sales[12];
     char* months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
+    // Get input
+    getInput(months, sales);
 
-    // getInput(months, sales);
+    // Process and output
     printf("\nMonthly Sales Report for 2024\n\n");
     monthlySalesReport(months, sales);
     salesSummaryReport(months, sales);
