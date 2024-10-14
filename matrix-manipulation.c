@@ -3,8 +3,18 @@
 #define SIZE 5
 
 // This function should take two matrices as input and return their sum
-int addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]) {
-    return 0;
+int (*addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE] {
+
+    static int result[SIZE][SIZE];
+
+    // Find the sum matrix
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            result[i][j] = m1[i][j] + m2[i][j];
+        }
+    }
+    
+    return result;
 }
 
 // This function should take two matrices as input and return their product
@@ -42,11 +52,19 @@ int main()
         {10, 9, 8, 7, 6},
         {5, 4, 3, 2, 1}};
 
-    // addMatrices(m1, m2);
+    // Display original matricies
+    printf("\nMatrix 1:\n");
+    printMatrix(m1);
+    printf("\nMatrix 2:\n");
+    printMatrix(m2);
+
+    // Display Matrix Addition
+    int (*sumMatrix)[SIZE] = addMatrices(m1, m2);
+    printf("\nSum of Matrix 1 and Matrix 2:\n");
+    printMatrix(sumMatrix);
+
     // multiplyMatrices(m1, m2);
     // transposeMatrix(m1, m2);
-    printf("\nPrinting Matrix 1:\n");
-    printMatrix(m1);
-    printf("\nPrinting Matrix 2:\n");
-    printMatrix(m2);
+
+    return 0;
 }
