@@ -41,9 +41,20 @@ int (*multiplyMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE]
 }
 
 // This function should take a matrix as input and return its transpose
-int (*transposeMatrix(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE]
+int (*transposeMatrix(int m[SIZE][SIZE]))[SIZE]
 {
-    return 0;
+    static int localTransposedMatrix[SIZE][SIZE];
+
+    // Find the transposed matrix
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            localTransposedMatrix[i][j] = m[j][i];
+        }
+    }
+
+    return localTransposedMatrix;    
 }
 
 // This function should take a matrix as input and print it in a user-friendly format
@@ -80,6 +91,17 @@ int main()
     printf("\nMatrix 2:\n");
     printMatrix(m2);
 
+    // Display Matrix Transposition
+    // Transpose m1
+    int(*transposedMatrix1)[SIZE] = transposeMatrix(m1);
+    printf("\nTransposition of Matrix 1:\n");
+    printMatrix(transposedMatrix1);
+
+    // Transpose m2
+    int(*transposedMatrix2)[SIZE] = transposeMatrix(m2);
+    printf("\nTransposition of Matrix 2:\n");
+    printMatrix(transposedMatrix2);
+
     // Display Matrix Addition
     int(*sumMatrix)[SIZE] = addMatrices(m1, m2);
     printf("\nSum of Matrix 1 and Matrix 2:\n");
@@ -89,8 +111,6 @@ int main()
     int(*multipliedMatrix)[SIZE] = multiplyMatrices(m1, m2);
     printf("\nProduct of Matrix 1 and Matrix 2:\n");
     printMatrix(multipliedMatrix);
-
-    // transposeMatrix(m1, m2);
 
     return 0;
 }
