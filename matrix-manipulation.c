@@ -54,7 +54,7 @@ int (*transposeMatrix(int m[SIZE][SIZE]))[SIZE]
         }
     }
 
-    return localTransposedMatrix;    
+    return localTransposedMatrix;
 }
 
 // This function should take a matrix as input and print it in a user-friendly format
@@ -107,10 +107,21 @@ int main()
     printf("\nSum of Matrix 1 and Matrix 2:\n");
     printMatrix(sumMatrix);
 
-    // Display Matrix Multiplication
-    int(*multipliedMatrix)[SIZE] = multiplyMatrices(m1, m2);
-    printf("\nProduct of Matrix 1 and Matrix 2:\n");
-    printMatrix(multipliedMatrix);
+    // Find number of m1 columns and m2 rows
+    size_t m1cols = sizeof(m1[0]) / sizeof(m1[0][0]);
+    size_t m2rows = sizeof(m2) / sizeof(m2[0]);
+
+    // Check if matrix multiplication is possible
+    if (m1cols != m2rows)
+    {
+        printf("\nMatrix multiplication not possible (%d != %d)\n", m1cols, m2rows);
+    }
+    else
+    {
+        int(*multipliedMatrix)[SIZE] = multiplyMatrices(m1, m2);
+        printf("\nProduct of Matrix 1 and Matrix 2:\n");
+        printMatrix(multipliedMatrix);
+    }
 
     return 0;
 }
