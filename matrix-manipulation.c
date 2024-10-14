@@ -3,34 +3,56 @@
 #define SIZE 5
 
 // This function should take two matrices as input and return their sum
-int (*addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE] {
-
-    static int result[SIZE][SIZE];
+int (*addMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE]
+{
+    static int localSumMatrix[SIZE][SIZE];
 
     // Find the sum matrix
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            result[i][j] = m1[i][j] + m2[i][j];
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            localSumMatrix[i][j] = m1[i][j] + m2[i][j];
         }
     }
-    
-    return result;
+
+    return localSumMatrix;
 }
 
 // This function should take two matrices as input and return their product
-int multiplyMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]) {
-    return 0;
+int (*multiplyMatrices(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE]
+{
+    static int localProductMatrix[SIZE][SIZE];
+
+    // Find the product matrix
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            localProductMatrix[i][j] = 0;
+            for (int k = 0; k < SIZE; k++)
+            {
+                localProductMatrix[i][j] += m1[i][k] * m2[k][j];
+            }
+        }
+    }
+
+    return localProductMatrix;
 }
 
 // This function should take a matrix as input and return its transpose
-int transposeMatrix(int m1[SIZE][SIZE], int m2[SIZE][SIZE]) {
+int (*transposeMatrix(int m1[SIZE][SIZE], int m2[SIZE][SIZE]))[SIZE]
+{
     return 0;
 }
 
 // This function should take a matrix as input and print it in a user-friendly format
-void printMatrix(int m[SIZE][SIZE]) {
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
+void printMatrix(int m[SIZE][SIZE])
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
             printf("%d\t", m[i][j]);
         }
         printf("\n");
@@ -59,11 +81,15 @@ int main()
     printMatrix(m2);
 
     // Display Matrix Addition
-    int (*sumMatrix)[SIZE] = addMatrices(m1, m2);
+    int(*sumMatrix)[SIZE] = addMatrices(m1, m2);
     printf("\nSum of Matrix 1 and Matrix 2:\n");
     printMatrix(sumMatrix);
 
-    // multiplyMatrices(m1, m2);
+    // Display Matrix Multiplication
+    int(*multipliedMatrix)[SIZE] = multiplyMatrices(m1, m2);
+    printf("\nProduct of Matrix 1 and Matrix 2:\n");
+    printMatrix(multipliedMatrix);
+
     // transposeMatrix(m1, m2);
 
     return 0;
